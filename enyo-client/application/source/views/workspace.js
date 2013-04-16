@@ -1353,11 +1353,11 @@ trailing:true white:true*/
                   {kind: "XV.MoneyWidget", attr:
                     {localValue: "freight", currency: "currency"},
                     label: "_freight".loc(), currencyShowing: false,
-                    effective: "quoteDate"},
+                    effective: "quoteDate", ontap: "showFreightBreakdown"},
                   {kind: "XV.MoneyWidget", attr:
                     {localValue: "taxTotal", currency: "currency"},
                     label: "_tax".loc(), currencyShowing: false,
-                    effective: "quoteDate"},
+                    effective: "quoteDate", ontap: "showTaxBreakdown"},
                   {kind: "XV.MoneyWidget", attr:
                     {localValue: "total", currency: "currency"},
                     label: "_total".loc(), currencyShowing: false,
@@ -1369,8 +1369,44 @@ trailing:true white:true*/
         ]},
         {kind: "XV.QuoteCommentBox", attr: "comments"},
         {kind: "XV.QuoteDocumentsBox", attr: "documents"}
+      ]},
+      // ..........................................................
+      // FREIGHT BREAKDOWN
+      //
+      {kind: "onyx.Popup", name: "freightBreakdownPopup", centered: true,
+        modal: true, floating: true, scrim: true, onShow: "popupShown",
+        onHide: "popupHidden", components: [
+        {content: "_freightBreakdown".loc()},
+        {tag: "br"},
+        {content: "_quote".loc()},
+        //display quote number
+        {tag: "br"},
+        {kind: "onyx.RadioGroup", name: "calculatedOrManual", onActivate: "freightRadioActivated",
+        components: [
+          {content: "Calculated"},
+          {content: "Manual"}
+        ]},
+        {tag: "br"}
+        //list relations thing
+      ]},
+      // ..........................................................
+      // TAX BREAKDOWN
+      //
+      {kind: "onyx.Popup", name: "taxBreakdownPopup", centered: true,
+        modal: true, floating: true, scrim: true, onShow: "popupShown",
+        onHide: "popupHidden", components: [
+        {content: "_taxBreakdown".loc()},
+        {tag: "br"}
       ]}
     ],
+    freightRadioActivated: function (inSender, inEvent) {
+      if (inEvent.originator.getContent() === "Calculated") {
+        //set thing to calculated
+      }
+      else if (inEvent.originator.getContent() === "Manual") {
+        //set thing to manual
+      }
+    },
     customerChanged: function () {
       var customer = this.$.customerProspectWidget.getValue(),
         id = customer ? customer.get("account") : -1;
@@ -1404,6 +1440,12 @@ trailing:true white:true*/
     },
     copyBilltoToShipto: function () {
       this.getValue().copyBilltoToShipto();
+    },
+    showFreightBreakdown: function () {
+      this.$.freightBreakdownPopup.setShowing(true);
+    },
+    showTaxBreakdown: function () {
+      this.$.taxBreakdownPopup.setShowing(true);
     }
   });
 
