@@ -1387,7 +1387,7 @@ trailing:true white:true*/
           {content: "Manual"}
         ]},
         {tag: "br"}
-        //list relations thing
+        //freight list thing goes here
       ]},
       // ..........................................................
       // TAX BREAKDOWN
@@ -1396,7 +1396,32 @@ trailing:true white:true*/
         modal: true, floating: true, scrim: true, onShow: "popupShown",
         onHide: "popupHidden", components: [
         {content: "_taxBreakdown".loc()},
-        {tag: "br"}
+        {tag: "br"},
+        {kind: "FittableRows", name: "taxBreakdownRows", components: [
+          {kind: "FittableColumns", name: "quoteInfo", components: [
+            {kind: "XV.InputWidget", attr: "number", disabled: true}
+          ]},
+          {kind: "FittableColumns", name: "zoneInfo", components: [
+            {kind: "XV.InputWidget", attr: "taxZone", disabled: true}
+          ]},
+          {kind: "FittableColumns", name: "taxCurrencies", components: [
+            {kind: "XV.InputWidget", label: "_quoteCurrency".loc(), attr: "currency", disabled: true},
+            {kind: "XV.InputWidget", label: "_taxCurrency".loc(), attr: "taxZone.currency", disabled: true}
+          ]},
+          {kind: "FittableColumns", name: "lineItemTaxes", components: [
+            {kind: "XV.InputWidget", label: "_taxableLineItemValue".loc(), attr: "", disabled: true},
+            {kind: "XV.InputWidget", label: "_lineItemTax".loc(), attr: "", disabled: true}
+          ]},
+          {kind: "FittableColumns", name: "freightTaxes", components: [
+            {kind: "XV.InputWidget", label: "_freightValue".loc(), attr: "", disabled: true},
+            {kind: "XV.InputWidget", label: "_freightTax".loc(), attr: "", disabled: true}
+          ]},
+          {kind: "FittableColumns", name: "taxTotals", components: [
+            {kind: "XV.InputWidget", label: "_preTaxTotalValue".loc(), attr: "", disabled: true},
+            {kind: "XV.InputWidget", label: "_totalTax".loc(), attr: "", disabled: true}
+          ]},
+          {kind: "XV.InputWidget", label: "_quoteTotal".loc(), attr: "", disabled: true}
+        ]}
       ]}
     ],
     freightRadioActivated: function (inSender, inEvent) {
