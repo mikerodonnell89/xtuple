@@ -1374,8 +1374,8 @@ trailing:true white:true*/
       // FREIGHT BREAKDOWN
       //
       {kind: "onyx.Popup", name: "freightBreakdownPopup", centered: true,
-        modal: true, floating: true, scrim: true, onShow: "popupShown",
-        onHide: "popupHidden", components: [
+        modal: true, floating: true, scrim: true, fit: true, onShow: "freightPopupShown",
+        onHide: "freightPopupHidden", components: [
         {content: "_freightBreakdown".loc()},
         {tag: "br"},
         {content: "_quote".loc()},
@@ -1392,35 +1392,30 @@ trailing:true white:true*/
       // ..........................................................
       // TAX BREAKDOWN
       //
-      {kind: "onyx.Popup", name: "taxBreakdownPopup", centered: true,
-        modal: true, floating: true, scrim: true, onShow: "popupShown",
-        onHide: "popupHidden", components: [
-        {content: "_taxBreakdown".loc()},
-        {tag: "br"},
-        {kind: "FittableRows", name: "taxBreakdownRows", components: [
-          {kind: "FittableColumns", name: "quoteInfo", components: [
-            {kind: "XV.InputWidget", attr: "number", disabled: true}
-          ]},
-          {kind: "FittableColumns", name: "zoneInfo", components: [
-            {kind: "XV.InputWidget", attr: "taxZone", disabled: true}
-          ]},
-          {kind: "FittableColumns", name: "taxCurrencies", components: [
-            {kind: "XV.InputWidget", label: "_quoteCurrency".loc(), attr: "currency", disabled: true},
-            {kind: "XV.InputWidget", label: "_taxCurrency".loc(), attr: "taxZone.currency", disabled: true}
-          ]},
-          {kind: "FittableColumns", name: "lineItemTaxes", components: [
-            {kind: "XV.InputWidget", label: "_taxableLineItemValue".loc(), attr: "", disabled: true},
-            {kind: "XV.InputWidget", label: "_lineItemTax".loc(), attr: "", disabled: true}
-          ]},
-          {kind: "FittableColumns", name: "freightTaxes", components: [
-            {kind: "XV.InputWidget", label: "_freightValue".loc(), attr: "", disabled: true},
-            {kind: "XV.InputWidget", label: "_freightTax".loc(), attr: "", disabled: true}
-          ]},
-          {kind: "FittableColumns", name: "taxTotals", components: [
-            {kind: "XV.InputWidget", label: "_preTaxTotalValue".loc(), attr: "", disabled: true},
-            {kind: "XV.InputWidget", label: "_totalTax".loc(), attr: "", disabled: true}
-          ]},
-          {kind: "XV.InputWidget", label: "_quoteTotal".loc(), attr: "", disabled: true}
+      {kind: "onyx.Popup", name: "taxBreakdownPopup", centered: true, style: "color: #000",
+        modal: true, floating: true, scrim: true, fit: true, onShow: "taxPopupShown",
+        onHide: "taxPopupHidden", components: [
+        {kind: "XV.Groupbox", name: "taxPopupPanel", fit: true, components: [
+          {kind: "onyx.GroupboxHeader", content: "_taxBreakdown".loc()},
+          {kind: "FittableRows", name: "taxBreakdownRows", style: "width: 480px;", components: [
+            {kind: "XV.InputWidget", attr: "number", disabled: true},
+            {kind: "XV.InputWidget", label: "_taxZone".loc(), attr: "taxZone.code", disabled: true},
+            {kind: "XV.InputWidget", label: "_quoteCurrency".loc(), attr: "currency.abbreviation", disabled: true},
+            {kind: "XV.InputWidget", label: "_taxCurrency".loc(), attr: "taxZone.currency.abbreviation", disabled: true},
+            /*
+            {kind: "FittableColumns", name: "lineItemTaxes", components: [
+              {kind: "XV.InputWidget", label: "_taxableLineItemValue".loc(), attr: ""},
+              {kind: "XV.InputWidget", label: "_lineItemTax".loc(), attr: ""}
+            ]},
+            {kind: "FittableColumns", name: "freightTaxes", components: [
+              {kind: "XV.InputWidget", label: "_freightValue".loc(), attr: ""},
+              {kind: "XV.InputWidget", label: "_freightTax".loc(), attr: ""}
+            ]},
+            */
+            {kind: "XV.InputWidget", label: "_preTaxTotalValue".loc(), attr: "subtotal"},
+            {kind: "XV.InputWidget", label: "_totalTax".loc(), attr: "taxTotal"},
+            {kind: "XV.InputWidget", label: "_quoteTotal".loc(), attr: "total"}
+          ]}
         ]}
       ]}
     ],
