@@ -1261,6 +1261,9 @@ trailing:true white:true*/
     title: "_quote".loc(),
     model: "XM.Quote",
     allowPrint: true,
+    published: {
+      totalMinusTax: 0
+    },
     printOnSaveSetting: "DefaultPrintSOOnSave",
     headerAttrs: ["number", "-", "billtoName"],
     components: [
@@ -1352,11 +1355,11 @@ trailing:true white:true*/
                     effective: "quoteDate"},
                   {kind: "XV.MoneyWidget", attr:
                     {localValue: "freight", currency: "currency"},
-                    label: "_freight".loc(), currencyShowing: false,
+                    label: "_freight".loc(), style: "color: #33338b;", currencyShowing: false,
                     effective: "quoteDate", ontap: "showFreightBreakdown"},
                   {kind: "XV.MoneyWidget", attr:
                     {localValue: "taxTotal", currency: "currency"},
-                    label: "_tax".loc(), currencyShowing: false,
+                    label: "_tax".loc(), style: "color: #33338b;", currencyShowing: false,
                     effective: "quoteDate", ontap: "showTaxBreakdown"},
                   {kind: "XV.MoneyWidget", attr:
                     {localValue: "total", currency: "currency"},
@@ -1412,13 +1415,25 @@ trailing:true white:true*/
               {kind: "XV.InputWidget", label: "_freightTax".loc(), attr: ""}
             ]},
             */
-            {kind: "XV.InputWidget", label: "_preTaxTotalValue".loc(), attr: "subtotal"},
-            {kind: "XV.InputWidget", label: "_totalTax".loc(), attr: "taxTotal"},
-            {kind: "XV.InputWidget", label: "_quoteTotal".loc(), attr: "total"}
+            {kind: "XV.MoneyWidget", attr:
+              {localValue: "this.totalMinusTax", currency: "currency"},
+              label: "_preTaxTotalValue".loc(), currencyShowing: false,
+              effective: "quoteDate"},
+            {kind: "XV.MoneyWidget", attr:
+              {localValue: "taxTotal", currency: "currency"},
+              label: "_totalTax".loc(), currencyShowing: false,
+              effective: "quoteDate"},
+            {kind: "XV.MoneyWidget", attr:
+              {localValue: "total", currency: "currency"},
+              label: "_quoteTotal".loc(), currencyShowing: false,
+              effective: "quoteDate"}
           ]}
         ]}
       ]}
     ],
+    taxPopupShown: function () {
+      this.totalMinusTax = XT.math.subtract("total", "taxTotal");
+    },
     freightRadioActivated: function (inSender, inEvent) {
       if (inEvent.originator.getContent() === "Calculated") {
         //set thing to calculated
