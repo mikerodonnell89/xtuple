@@ -477,6 +477,7 @@ var lang = XT.stringsFor("en_US", {
   "_taxBreakdown": "Tax Breakdown",
   "_taxClass": "Tax Class",
   "_taxCurrency": "Tax Currency",
+  "_taxRate": "Tax Rate",
   "_taxRegistration": "Tax Registrations",
   "_taxZone": "Tax Zone",
   "_terms": "Terms",
