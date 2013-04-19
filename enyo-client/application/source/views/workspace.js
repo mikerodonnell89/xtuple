@@ -1376,21 +1376,20 @@ trailing:true white:true*/
       // ..........................................................
       // FREIGHT BREAKDOWN
       //
-      {kind: "onyx.Popup", name: "freightBreakdownPopup", centered: true,
+      {kind: "onyx.Popup", name: "freightBreakdownPopup", centered: true, style: "color: #000",
         modal: true, floating: true, scrim: true, fit: true, onShow: "freightPopupShown",
         onHide: "freightPopupHidden", components: [
-        {content: "_freightBreakdown".loc()},
-        {tag: "br"},
-        {content: "_quote".loc()},
-        //display quote number
-        {tag: "br"},
+        {kind: "XV.Groupbox", name: "freightPopupPanel", fit: true, components: [
+          {kind: "onyx.GroupboxHeader", content: "_freightBreakdown".loc()},
+          {kind: "FittableRows", name: "freightBreakdownRows", style: "width: 480px;", components: [
+            {kind: "XV.InputWidget", label: "_quote".loc(), attr: "number", disabled: true}
+          ]}
+        ]},
         {kind: "onyx.RadioGroup", name: "calculatedOrManual", onActivate: "freightRadioActivated",
         components: [
           {content: "Calculated"},
           {content: "Manual"}
-        ]},
-        {tag: "br"}
-        //freight list thing goes here
+        ]}
       ]},
       // ..........................................................
       // TAX BREAKDOWN

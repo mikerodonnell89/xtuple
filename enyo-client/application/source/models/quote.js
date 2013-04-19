@@ -773,6 +773,7 @@ white:true*/
         this.setReadOnly(["number", "customer"], true);
         this.applyCustomerSettings();
       }
+      this.calculateFreight();
     },
 
     validate: function () {

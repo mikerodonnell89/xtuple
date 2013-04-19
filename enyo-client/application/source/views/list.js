@@ -521,7 +521,37 @@ trailing:true white:true*/
   });
 
   XV.registerModelList("XM.FileRelation", "XV.FileList");
+  
+  // ..........................................................
+  // FREIGHT BREAKDOWN
+  //
+/*
+  enyo.kind({
+    name: "XV.FreightBreakdownList",
+    kind: "XV.List",
+    label: "_freightBreakdown".loc(),
+    collection: "XM.Quote.freightDetail",
+    parameterWidget: "XV.FreightBreakdownListParameters",
+    query: {orderBy: [
+      {attribute: 'code'}
+    ]},
+    components: [
+      {kind: "XV.ListItem", components: [
+        {kind: "FittableColumns", components: [
+          {kind: "XV.ListColumn", classes: "short",
+            components: [
+            {kind: "XV.ListAttr", attr: "code", isKey: true}
+          ]},
+          {kind: "XV.ListColumn", classes: "last", fit: true, components: [
+            {kind: "XV.ListAttr", attr: "description"}
+          ]}
+        ]}
+      ]}
+    ]
+  });
 
+  XV.registerModelList("XM.FreightBreakdownRelation", "XV.FreightBreakdownList");
+*/
   // ..........................................................
   // FREIGHT CLASS
   //
