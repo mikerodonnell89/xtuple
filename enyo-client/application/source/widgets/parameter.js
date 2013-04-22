@@ -191,21 +191,7 @@ trailing:true white:true*/
       {name: "description", label: "_description", attr: "description"}
     ]
   });
-  
-  // ..........................................................
-  // FREIGHT DETAIL
-  //
-/*
-  enyo.kind({
-    name: "XV.FreightDetailListParameters",
-    kind: "XV.ParameterWidget",
-    components: [
-      {kind: "onyx.GroupboxHeader", content: "_freightBreakdown".loc()},
-      {name: "code", label: "_code".loc(), attr: "code"},
-      {name: "description", label: "_description", attr: "description"}
-    ]
-  });
-*/
+
   // ..........................................................
   // FREIGHT CLASS
   //

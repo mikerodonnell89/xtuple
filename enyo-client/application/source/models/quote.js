@@ -40,6 +40,16 @@ white:true*/
     freightDetail: undefined,
 
     freightTaxDetail: undefined,
+    
+    totalMinusTax: 0,
+    
+    taxableLineItemValue: 0,
+    
+    lineItemTax: 0,
+    
+    freightValue: 0,
+    
+    freightTax: 0,
 
     defaults: function () {
       var K = this.getClass(),
@@ -380,6 +390,8 @@ white:true*/
     */
     calculateTotals: function (calcFreight) {
       var calculateFreight = this.get("calculateFreight");
+      
+      this.totalMinusTax = XT.math.subtract(this.get('tax'), this.get('taxTotal'));
 
       if (calculateFreight && calcFreight !== false) {
         this.calculateFreight();
@@ -773,7 +785,7 @@ white:true*/
         this.setReadOnly(["number", "customer"], true);
         this.applyCustomerSettings();
       }
-      this.calculateFreight();
+      this.calculateTotals();
     },
 
     validate: function () {

@@ -525,33 +525,55 @@ trailing:true white:true*/
   // ..........................................................
   // FREIGHT BREAKDOWN
   //
-/*
+
   enyo.kind({
     name: "XV.FreightBreakdownList",
     kind: "XV.List",
-    label: "_freightBreakdown".loc(),
     collection: "XM.Quote.freightDetail",
-    parameterWidget: "XV.FreightBreakdownListParameters",
     query: {orderBy: [
-      {attribute: 'code'}
+      {attribute: 'schedule'}
     ]},
     components: [
       {kind: "XV.ListItem", components: [
         {kind: "FittableColumns", components: [
-          {kind: "XV.ListColumn", classes: "short",
-            components: [
-            {kind: "XV.ListAttr", attr: "code", isKey: true}
+          {kind: "XV.ListColumn", classes: "short", components: [
+            {kind: "XV.ListAttr", attr: "schedule", isKey: true}
+          ]},
+          {kind: "XV.ListColumn", classes: "short", components: [
+            {kind: "XV.ListAttr", attr: "from"}
+          ]},
+          {kind: "XV.ListColumn", classes: "short", components: [
+            {kind: "XV.ListAttr", attr: "to"}
+          ]},
+          {kind: "XV.ListColumn", classes: "short", components: [
+            {kind: "XV.ListAttr", attr: "shipVia"}
+          ]},
+          {kind: "XV.ListColumn", classes: "short", components: [
+            {kind: "XV.ListAttr", attr: "freightClass"}
+          ]},
+          {kind: "XV.ListColumn", classes: "short", components: [
+            {kind: "XV.ListAttr", attr: "weight"}
+          ]},
+          {kind: "XV.ListColumn", classes: "short", components: [
+            {kind: "XV.ListAttr", attr: "unit"}
+          ]},
+          {kind: "XV.ListColumn", classes: "short", components: [
+            {kind: "XV.ListAttr", attr: "price"}
+          ]},
+          {kind: "XV.ListColumn", classes: "short", components: [
+            {kind: "XV.ListAttr", attr: "type"}
+          ]},
+          {kind: "XV.ListColumn", classes: "short", components: [
+            {kind: "XV.ListAttr", attr: "total"}
           ]},
           {kind: "XV.ListColumn", classes: "last", fit: true, components: [
-            {kind: "XV.ListAttr", attr: "description"}
+            {kind: "XV.ListAttr", attr: "currency"}
           ]}
         ]}
       ]}
     ]
   });
 
-  XV.registerModelList("XM.FreightBreakdownRelation", "XV.FreightBreakdownList");
-*/
   // ..........................................................
   // FREIGHT CLASS
   //
