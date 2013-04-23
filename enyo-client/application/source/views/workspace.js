@@ -1261,6 +1261,9 @@ trailing:true white:true*/
     title: "_quote".loc(),
     model: "XM.Quote",
     allowPrint: true,
+    published: {
+      freightDetailLength: 0
+    },
     printOnSaveSetting: "DefaultPrintSOOnSave",
     headerAttrs: ["number", "-", "billtoName"],
     components: [
@@ -1467,6 +1470,8 @@ trailing:true white:true*/
       this.getValue().copyBilltoToShipto();
     },
     showFreightBreakdown: function () {
+      this.$.freightBreakdownList.setCount(this.getValue().freightDetail.length);
+      this.$.freightBreakdownList.setCollection(this.getValue().freightDetail);
       this.$.freightBreakdownPopup.setShowing(true);
     },
     showTaxBreakdown: function () {
