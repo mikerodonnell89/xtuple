@@ -521,6 +521,57 @@ trailing:true white:true*/
   });
 
   XV.registerModelList("XM.FileRelation", "XV.FileList");
+  
+  // ..........................................................
+  // FREIGHT BREAKDOWN
+  //
+
+  enyo.kind({
+    name: "XV.FreightBreakdownList",
+    kind: "XV.List",
+    query: {orderBy: [
+      {attribute: 'schedule'}
+    ]},
+    components: [
+      {kind: "XV.ListItem", components: [
+        {kind: "FittableColumns", components: [
+          {kind: "XV.ListColumn", classes: "short", components: [
+            {kind: "XV.ListAttr", attr: "schedule", isKey: true}
+          ]},
+          {kind: "XV.ListColumn", classes: "short", components: [
+            {kind: "XV.ListAttr", attr: "from"}
+          ]},
+          {kind: "XV.ListColumn", classes: "short", components: [
+            {kind: "XV.ListAttr", attr: "to"}
+          ]},
+          {kind: "XV.ListColumn", classes: "short", components: [
+            {kind: "XV.ListAttr", attr: "shipVia"}
+          ]},
+          {kind: "XV.ListColumn", classes: "short", components: [
+            {kind: "XV.ListAttr", attr: "freightClass"}
+          ]},
+          {kind: "XV.ListColumn", classes: "short", components: [
+            {kind: "XV.ListAttr", attr: "weight"}
+          ]},
+          {kind: "XV.ListColumn", classes: "short", components: [
+            {kind: "XV.ListAttr", attr: "unit"}
+          ]},
+          {kind: "XV.ListColumn", classes: "short", components: [
+            {kind: "XV.ListAttr", attr: "price"}
+          ]},
+          {kind: "XV.ListColumn", classes: "short", components: [
+            {kind: "XV.ListAttr", attr: "type"}
+          ]},
+          {kind: "XV.ListColumn", classes: "short", components: [
+            {kind: "XV.ListAttr", attr: "total"}
+          ]},
+          {kind: "XV.ListColumn", classes: "last", fit: true, components: [
+            {kind: "XV.ListAttr", attr: "currency"}
+          ]}
+        ]}
+      ]}
+    ]
+  });
 
   // ..........................................................
   // FREIGHT CLASS
