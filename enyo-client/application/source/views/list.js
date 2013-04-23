@@ -529,7 +529,6 @@ trailing:true white:true*/
   enyo.kind({
     name: "XV.FreightBreakdownList",
     kind: "XV.List",
-    collection: "XM.Quote.freightDetail",
     query: {orderBy: [
       {attribute: 'schedule'}
     ]},
