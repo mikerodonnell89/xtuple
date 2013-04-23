@@ -191,7 +191,7 @@ trailing:true white:true*/
       {name: "description", label: "_description", attr: "description"}
     ]
   });
-
+  
   // ..........................................................
   // FREIGHT CLASS
   //
