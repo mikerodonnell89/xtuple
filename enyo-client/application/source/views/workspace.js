@@ -1261,6 +1261,9 @@ trailing:true white:true*/
     title: "_quote".loc(),
     model: "XM.Quote",
     allowPrint: true,
+    published: {
+      freightDetailLength: 0
+    },
     printOnSaveSetting: "DefaultPrintSOOnSave",
     headerAttrs: ["number", "-", "billtoName"],
     components: [
@@ -1352,12 +1355,12 @@ trailing:true white:true*/
                     effective: "quoteDate"},
                   {kind: "XV.MoneyWidget", attr:
                     {localValue: "freight", currency: "currency"},
-                    label: "_freight".loc(), currencyShowing: false,
-                    effective: "quoteDate"},
+                    label: "_freight".loc(), style: "color: #33338b;", currencyShowing: false,
+                    effective: "quoteDate", ontap: "showFreightBreakdown"},
                   {kind: "XV.MoneyWidget", attr:
                     {localValue: "taxTotal", currency: "currency"},
-                    label: "_tax".loc(), currencyShowing: false,
-                    effective: "quoteDate"},
+                    label: "_tax".loc(), style: "color: #33338b;", currencyShowing: false,
+                    effective: "quoteDate", ontap: "showTaxBreakdown"},
                   {kind: "XV.MoneyWidget", attr:
                     {localValue: "total", currency: "currency"},
                     label: "_total".loc(), currencyShowing: false,
@@ -1369,8 +1372,69 @@ trailing:true white:true*/
         ]},
         {kind: "XV.QuoteCommentBox", attr: "comments"},
         {kind: "XV.QuoteDocumentsBox", attr: "documents"}
+      ]},
+      // ..........................................................
+      // FREIGHT BREAKDOWN
+      //
+      {kind: "onyx.Popup", name: "freightBreakdownPopup", centered: true, style: "color: #000",
+        modal: true, floating: true, scrim: true, fit: true, onShow: "freightPopupShown",
+        onHide: "freightPopupHidden", components: [
+        {kind: "XV.Groupbox", name: "freightPopupPanel", fit: true, components: [
+          {kind: "onyx.GroupboxHeader", content: "_freightBreakdown".loc()},
+          {kind: "FittableRows", name: "freightBreakdownRows", style: "width: 480px;", components: [
+            {kind: "XV.InputWidget", label: "_quote".loc(), attr: "number", disabled: true}
+          ]}
+        ]},
+        {kind: "onyx.RadioGroup", name: "calculatedOrManual", onActivate: "freightRadioActivated",
+        components: [
+          {content: "Calculated"},
+          {content: "Manual"}
+        ]},
+        {kind: "XV.FreightBreakdownList", name: "freightBreakdownList"}
+      ]},
+      // ..........................................................
+      // TAX BREAKDOWN
+      //
+      {kind: "onyx.Popup", name: "taxBreakdownPopup", centered: true, style: "color: #000",
+        modal: true, floating: true, scrim: true, fit: true, onShow: "taxPopupShown",
+        onHide: "taxPopupHidden", components: [
+        {kind: "XV.Groupbox", name: "taxPopupPanel", fit: true, components: [
+          {kind: "onyx.GroupboxHeader", content: "_taxBreakdown".loc()},
+          {kind: "FittableRows", name: "taxBreakdownRows", style: "width: 480px;", components: [
+            {kind: "XV.InputWidget", attr: "number", disabled: true},
+            {kind: "XV.InputWidget", label: "_taxZone".loc(), attr: "taxZone.code", disabled: true},
+            {kind: "XV.InputWidget", label: "_quoteCurrency".loc(), attr: "currency.abbreviation", disabled: true},
+            {kind: "XV.InputWidget", label: "_taxCurrency".loc(), attr: "taxZone.currency.abbreviation", disabled: true},
+            /*
+            {kind: "XV.InputWidget", label: "_taxableLineItemValue".loc(), attr: ""},
+            {kind: "XV.InputWidget", label: "_lineItemTax".loc(), attr: ""},
+            {kind: "XV.InputWidget", label: "_freightValue".loc(), attr: ""},
+            {kind: "XV.InputWidget", label: "_freightTax".loc(), attr: ""},
+            */
+            {kind: "XV.MoneyWidget", attr:
+              {localValue: "totalMinusTax", currency: "currency"},
+              label: "_preTaxTotalValue".loc(), currencyShowing: false,
+              effective: "quoteDate"},
+            {kind: "XV.MoneyWidget", attr:
+              {localValue: "taxTotal", currency: "currency"},
+              label: "_totalTax".loc(), currencyShowing: false,
+              effective: "quoteDate"},
+            {kind: "XV.MoneyWidget", attr:
+              {localValue: "total", currency: "currency"},
+              label: "_quoteTotal".loc(), currencyShowing: false,
+              effective: "quoteDate"}
+          ]}
+        ]}
       ]}
     ],
+    freightRadioActivated: function (inSender, inEvent) {
+      if (inEvent.originator.getContent() === "Calculated") {
+        //set thing to calculated
+      }
+      else if (inEvent.originator.getContent() === "Manual") {
+        //set thing to manual
+      }
+    },
     customerChanged: function () {
       var customer = this.$.customerProspectWidget.getValue(),
         id = customer ? customer.get("account") : -1;
@@ -1404,6 +1468,14 @@ trailing:true white:true*/
     },
     copyBilltoToShipto: function () {
       this.getValue().copyBilltoToShipto();
+    },
+    showFreightBreakdown: function () {
+      this.$.freightBreakdownList.setCount(this.getValue().freightDetail.length);
+      this.$.freightBreakdownList.setCollection(this.getValue().freightDetail);
+      this.$.freightBreakdownPopup.setShowing(true);
+    },
+    showTaxBreakdown: function () {
+      this.$.taxBreakdownPopup.setShowing(true);
     }
   });
 
