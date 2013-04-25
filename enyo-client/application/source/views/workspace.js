@@ -1409,12 +1409,11 @@ trailing:true white:true*/
             {kind: "XV.InputWidget", label: "_taxZone".loc(), attr: "taxZone.code", disabled: true},
             {kind: "XV.InputWidget", label: "_quoteCurrency".loc(), attr: "currency.abbreviation", disabled: true},
             {kind: "XV.InputWidget", label: "_taxCurrency".loc(), attr: "taxZone.currency.abbreviation", disabled: true},
-            /*
-            {kind: "XV.InputWidget", label: "_taxableLineItemValue".loc(), attr: ""},
+            //{kind: "XV.InputWidget", label: "_taxableLineItemValue".loc(), attr: ""},
             {kind: "XV.InputWidget", label: "_lineItemTax".loc(), attr: ""},
-            {kind: "XV.InputWidget", label: "_freightValue".loc(), attr: ""},
-            {kind: "XV.InputWidget", label: "_freightTax".loc(), attr: ""},
-            */
+            //{kind: "XV.InputWidget", label: "_freightValue".loc(), attr: ""},
+            //{kind: "XV.InputWidget", label: "_freightTax".loc(), attr: ""},
+            /*
             {kind: "XV.MoneyWidget", attr:
               {localValue: "totalMinusTax", currency: "currency"},
               label: "_preTaxTotalValue".loc(), currencyShowing: false,
@@ -1427,6 +1426,10 @@ trailing:true white:true*/
               {localValue: "total", currency: "currency"},
               label: "_quoteTotal".loc(), currencyShowing: false,
               effective: "quoteDate"}
+            */
+            {kind: "XV.NumberWidget", attr: "totalMinusTax"},
+            {kind: "XV.NumberWidget", attr: "taxTotal"},
+            {kind: "XV.NumberWidget", attr: "total"}
           ]}
         ]}
       ]}

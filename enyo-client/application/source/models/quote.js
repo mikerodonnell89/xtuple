@@ -251,6 +251,16 @@ white:true*/
     freightDetail: undefined,
 
     freightTaxDetail: undefined,
+    
+    totalMinusTax: undefined,
+    
+    taxableLineItemValue: undefined,
+    
+    lineItemTax: undefined,
+    
+    freightValue: undefined,
+    
+    freightTax: undefined,
 
     defaults: function () {
       var K = this.getClass(),
@@ -398,6 +408,11 @@ white:true*/
       XM.Document.prototype.initialize.apply(this, arguments);
       this.freightDetail = [];
       this.freightTaxDetail = [];
+      this.totalMinusTax = 0;
+      this.taxableLineItemValue = 0;
+      this.lineItemTax = 0;
+      this.freightValue = 0;
+      this.freightTax = 0;
 
       if (!this.documentDateKey) {
         console.log("Error: model needs a documentDateKey");
