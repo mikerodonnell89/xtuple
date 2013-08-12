@@ -59,6 +59,8 @@ white:true*/
           that.set(matchingArray[i], quote.get(matchingArray[i]));
         }
         that.set('orderDate', quote.get('quoteDate'));
+        that.set('wasQuote', true);
+        that.set('quoteNumber', quote.get('number'));
         //now deal with the attrs that don't match
         that.setReadOnly("number", false);
         that.set("number", quote.get("number"));
