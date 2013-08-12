@@ -32,6 +32,45 @@ white:true*/
       defaults.wasQuote = false;
 
       return defaults;
+    },
+
+    convertFromQuote: function (id) {
+      var matchingArray,
+        notMatchingArray, //for dev purposes, DELETE WHEN YOU'RE DONE MIKE
+        soAttrs = XM.SalesOrder.getAttributeNames(),
+        quoteAttrs = XM.Quote.getAttributeNames(),
+        quote = new XM.Quote(),
+        fetchOptions = {},
+        that = this;
+
+      fetchOptions.id = id;
+
+      fetchOptions.success = function (resp) {
+        //find all the matching attributes
+        for (var i = 0; i < soAttrs.length; i++) {
+          if (quoteAttrs.indexOf(soAttrs[i]) !== -1) {
+            matchingArray.push(soAttrs[i]);
+          }
+          else {
+            notMatchingArray.push(soAttrs[i]); //DELETE THIS TOO MIKE
+          }
+        }
+        for (var i = 0; i < matchingArray.length; i++) {
+          that.set(matchingArray[i], quote.get(matchingArray[i]));
+        }
+        that.set('orderDate', quote.get('quoteDate'));
+        //now deal with the attrs that don't match
+        that.setReadOnly("number", false);
+        that.set("number", quote.get("number"));
+        that.setReadOnly("number", true);
+        that.revertStatus();
+        that.checkConflicts = false;
+      };
+      fetchOptions.error = function (resp) {
+        XT.log("Fetch failed in convertFromSalesOrder");
+      };
+      this.setStatus(XM.Model.BUSY_FETCHING);
+      quote.fetch(fetchOptions);
     }
   });
 
