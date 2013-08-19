@@ -34,16 +34,15 @@ white:true*/
       return defaults;
     },
 
-    convertFromQuote: function (id) {
-      var matchingArray,
-        notMatchingArray, //for dev purposes, DELETE WHEN YOU'RE DONE MIKE
+    convertFromQuote: function (number) {
+      var matchingArray = [],
         soAttrs = XM.SalesOrder.getAttributeNames(),
         quoteAttrs = XM.Quote.getAttributeNames(),
         quote = new XM.Quote(),
         fetchOptions = {},
         that = this;
 
-      fetchOptions.id = id;
+      fetchOptions.number = number;
 
       fetchOptions.success = function (resp) {
         //find all the matching attributes
@@ -51,17 +50,16 @@ white:true*/
           if (quoteAttrs.indexOf(soAttrs[i]) !== -1) {
             matchingArray.push(soAttrs[i]);
           }
-          else {
-            notMatchingArray.push(soAttrs[i]); //DELETE THIS TOO MIKE
-          }
         }
         for (var i = 0; i < matchingArray.length; i++) {
           that.set(matchingArray[i], quote.get(matchingArray[i]));
         }
+        //the attrs below are ones with names that don't match between
+        //  quotes and sales orders
+        that.subnumber = 0;
         that.set('orderDate', quote.get('quoteDate'));
         that.set('wasQuote', true);
         that.set('quoteNumber', quote.get('number'));
-        //now deal with the attrs that don't match
         that.setReadOnly("number", false);
         that.set("number", quote.get("number"));
         that.setReadOnly("number", true);
@@ -73,6 +71,7 @@ white:true*/
       };
       this.setStatus(XM.Model.BUSY_FETCHING);
       quote.fetch(fetchOptions);
+      that.save();
     }
   });
 
