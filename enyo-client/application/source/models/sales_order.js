@@ -56,22 +56,21 @@ white:true*/
         }
         //the attrs below are ones with names that don't match between
         //  quotes and sales orders
-        that.subnumber = 0;
         that.set('orderDate', quote.get('quoteDate'));
         that.set('wasQuote', true);
         that.set('quoteNumber', quote.get('number'));
         that.setReadOnly("number", false);
         that.set("number", quote.get("number"));
         that.setReadOnly("number", true);
-        that.revertStatus();
+        that.setStatus(XM.Model.READY_DIRTY);
         that.checkConflicts = false;
+        that.save();
       };
       fetchOptions.error = function (resp) {
         XT.log("Fetch failed in convertFromSalesOrder");
       };
       this.setStatus(XM.Model.BUSY_FETCHING);
       quote.fetch(fetchOptions);
-      that.save();
     }
   });
 

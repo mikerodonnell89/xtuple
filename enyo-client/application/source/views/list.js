@@ -193,7 +193,7 @@ trailing:true, white:true*/
     actions: [{
       name: "exportContact",
       method: "vCardExport",
-      isViewMethod: "true"
+      isViewMethod: true
     }],
     query: {orderBy: [
       {attribute: 'lastName'},
@@ -1596,6 +1596,11 @@ trailing:true, white:true*/
     query: {orderBy: [
       {attribute: 'number'}
     ]},
+    actions: [{
+      name: "convert",
+      method: "convertToSalesOrder",
+      isViewMethod: true
+    }],
     allowPrint: true,
     components: [
       {kind: "XV.ListItem", components: [
@@ -1626,6 +1631,33 @@ trailing:true, white:true*/
         ]}
       ]}
     ],
+    convertToSalesOrder: function (inEvent) {
+      var model = inEvent.model,
+        modelId = model.id,
+        success = function () {
+          this.getValue().convertFromQuote(modelId);
+        };
+
+      var soAttrs = XM.SalesOrder.getAttributeNames(),
+        quoteAttrs = XM.Quote.getAttributeNames(),
+        matchingArray = [];
+
+      //find all the matching attributes
+      for (var i = 0; i < soAttrs.length; i++) {
+        if (quoteAttrs.indexOf(soAttrs[i]) !== -1) {
+          matchingArray.push(soAttrs[i]);
+        }
+      }
+
+      this.doWorkspace({
+        workspace: "XV.SalesOrderWorkspace",
+        attributes: {
+          number: model.get('number')
+        },
+        success: success,
+        allowNew: false
+      });
+    },
     formatExpireDate: function (value, view, model) {
       var isLate = model && model.get('expireDate') &&
         (XT.date.compareDate(value, new Date()) < 1);

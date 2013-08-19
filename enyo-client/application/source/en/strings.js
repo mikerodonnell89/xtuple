@@ -136,6 +136,7 @@ var lang = XT.stringsFor("en_US", {
   "_contact": "Contact",
   "_contactRelations": "Contacts",
   "_contacts": "Contacts",
+  "_convertToSalesOrder": "Convert to Sales Order",
   "_coProduct": "Co-Product",
   "_copyToShipTo": "Copy to Ship To",
   "_costCategories": "Cost Categories",
