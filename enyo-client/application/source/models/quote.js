@@ -24,7 +24,7 @@ white:true*/
     fetchNumberDispatchModel: "XM.Quote",
 
     documentDateKey: "quoteDate"
-    
+
   });
 
   /**
