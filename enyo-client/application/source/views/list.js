@@ -2314,16 +2314,8 @@ trailing:true, white:true*/
 
   XV.registerModelList("XM.VendorRelation", "XV.VendorList");
 
-  // ..........................................................
-  // INCIDENT CATEGORIES, RESOLUTIONS, SEVERITIES,
-  // PRIORITIES,
-  // OPPORTUNITY SOURCES, STAGES, TYPES,
-  //
-  // Basically anything whose rows are name and description
-  //
-
   enyo.kind({
-    name: "XV.NameDescriptionList",
+    name: "XV.NameList",
     kind: "XV.List",
     query: {orderBy: [
       {attribute: 'name'}
@@ -2334,9 +2326,6 @@ trailing:true, white:true*/
           {kind: "XV.ListColumn", classes: "short",
             components: [
             {kind: "XV.ListAttr", attr: "name", isKey: true}
-          ]},
-          {kind: "XV.ListColumn", classes: "last", fit: true, components: [
-            {kind: "XV.ListAttr", attr: "description"}
           ]}
         ]}
       ]}
@@ -2359,6 +2348,26 @@ trailing:true, white:true*/
 
     determineLabel: function (kindName) {
       return ("_" + kindName.camelize().pluralize()).loc();
+    }
+  });
+
+  // ..........................................................
+  // INCIDENT CATEGORIES, RESOLUTIONS, SEVERITIES,
+  // PRIORITIES,
+  // OPPORTUNITY SOURCES, STAGES, TYPES,
+  //
+  // Basically anything whose rows are name and description
+  //
+  enyo.kind({
+    name: "XV.NameDescriptionList",
+    kind: "XV.NameList",
+    create: function () {
+      this.inherited(arguments);
+      this.createComponent({
+        kind: "XV.ListColumn", classes: "last", fit: true, components: [
+          {kind: "XV.ListAttr", attr: "description"}
+        ]
+      });
     }
   });
 
@@ -2425,7 +2434,7 @@ trailing:true, white:true*/
 
   enyo.kind({
     name: "XV.CharacteristicList",
-    kind: "XV.NameDescriptionList",
+    kind: "XV.NameList",
     collection: "XM.CharacteristicCollection"
   });
 }());

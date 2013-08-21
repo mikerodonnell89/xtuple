@@ -1,9 +1,11 @@
 {
-  "version": "1.4.1",
+  "version": "1.4.2",
   "databaseScripts": [
     "register.sql",
+    "public/tables/itemloc.sql",
     "public/tables/locitem.sql",
     "xt/views/coitemship.sql",
+    "xt/views/itemsitedtl.sql",
     "xt/views/locitemsite.sql",
     "xt/views/shipheadinfo.sql",
     "xt/views/shipmentline.sql",
