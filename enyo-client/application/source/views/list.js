@@ -1638,21 +1638,10 @@ trailing:true, white:true*/
           this.getValue().convertFromQuote(modelId);
         };
 
-      var soAttrs = XM.SalesOrder.getAttributeNames(),
-        quoteAttrs = XM.Quote.getAttributeNames(),
-        matchingArray = [];
-
-      //find all the matching attributes
-      for (var i = 0; i < soAttrs.length; i++) {
-        if (quoteAttrs.indexOf(soAttrs[i]) !== -1) {
-          matchingArray.push(soAttrs[i]);
-        }
-      }
-
       this.doWorkspace({
         workspace: "XV.SalesOrderWorkspace",
         attributes: {
-          number: model.get('number')
+          number: model.get("number")
         },
         success: success,
         allowNew: false

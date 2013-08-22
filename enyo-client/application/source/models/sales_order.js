@@ -34,7 +34,7 @@ white:true*/
       return defaults;
     },
 
-    convertFromQuote: function (number) {
+    convertFromQuote: function (id) {
       var matchingArray = [],
         soAttrs = XM.SalesOrder.getAttributeNames(),
         quoteAttrs = XM.Quote.getAttributeNames(),
@@ -42,7 +42,7 @@ white:true*/
         fetchOptions = {},
         that = this;
 
-      fetchOptions.number = number;
+      fetchOptions.id = id;
 
       fetchOptions.success = function (resp) {
         //find all the matching attributes
@@ -52,17 +52,56 @@ white:true*/
           }
         }
         for (var i = 0; i < matchingArray.length; i++) {
-          that.set(matchingArray[i], quote.get(matchingArray[i]));
+          if (matchingArray[i] !== 'lineItems')
+            that.set(matchingArray[i], quote.get(matchingArray[i]));
+          else {
+            //need to convert quote lines to sales order lines
+            var quoteLineItems = quote.get('lineItems'),
+              salesOrderLineItems = new XM.SalesOrderLineCollection(),
+              salesOrderLine = new XM.SalesOrderLine(),
+              quoteLine = new XM.QuoteLine(),
+              fetchOptions2 = {},
+              matchingArray2 = [],
+              notMatchingArray2 = [],
+              quoteLineAttrs = XM.QuoteLine.getAttributeNames(),
+              soLineAttrs = XM.SalesOrderLine.getAttributeNames();
+
+            for (var i = 0; i < soLineAttrs.length; i++) {
+              if (quoteLineAttrs.indexOf(soLineAttrs[i]) !== -1)
+                matchingArray2.push(soLineAttrs[i]);
+              else
+                notMatchingArray2.push(soLineAttrs[i]);
+            }
+
+            _.each(quoteLineItems.models, function (line) {
+
+              fetchOptions2.id = line.get('id');
+
+              fetchOptions2.success = function (resp) {
+                for (var i = 0; i < matchingArray2.length; i++) {
+                  salesOrderLine.set(matchingArray2[i], line.get(matchingArray2[i]));
+                }
+              }
+              fetchOptions2.error = function (resp) {
+                console.log("could not fetch quote line");
+              }
+              quoteLine.fetch();
+              salesOrderLineItems.add(salesOrderLine);
+            });
+
+            that.set('lineItems', salesOrderLineItems);
+          }
         }
         //the attrs below are ones with names that don't match between
         //  quotes and sales orders
+        that.set('id', 1891731)
         that.set('orderDate', quote.get('quoteDate'));
         that.set('wasQuote', true);
         that.set('quoteNumber', quote.get('number'));
         that.setReadOnly("number", false);
         that.set("number", quote.get("number"));
         that.setReadOnly("number", true);
-        that.setStatus(XM.Model.READY_DIRTY);
+        that.revertStatus();
         that.checkConflicts = false;
         that.save();
       };
