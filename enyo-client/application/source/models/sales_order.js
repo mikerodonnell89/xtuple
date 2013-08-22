@@ -60,35 +60,7 @@ white:true*/
               salesOrderLineItems = new XM.SalesOrderLineCollection(),
               salesOrderLine = new XM.SalesOrderLine(),
               quoteLine = new XM.QuoteLine(),
-              fetchOptions2 = {},
-              matchingArray2 = [],
-              notMatchingArray2 = [],
-              quoteLineAttrs = XM.QuoteLine.getAttributeNames(),
-              soLineAttrs = XM.SalesOrderLine.getAttributeNames();
-
-            for (var i = 0; i < soLineAttrs.length; i++) {
-              if (quoteLineAttrs.indexOf(soLineAttrs[i]) !== -1)
-                matchingArray2.push(soLineAttrs[i]);
-              else
-                notMatchingArray2.push(soLineAttrs[i]);
-            }
-
-            _.each(quoteLineItems.models, function (line) {
-
-              fetchOptions2.id = line.get('id');
-
-              fetchOptions2.success = function (resp) {
-                for (var i = 0; i < matchingArray2.length; i++) {
-                  salesOrderLine.set(matchingArray2[i], line.get(matchingArray2[i]));
-                }
-              }
-              fetchOptions2.error = function (resp) {
-                console.log("could not fetch quote line");
-              }
-              quoteLine.fetch();
-              salesOrderLineItems.add(salesOrderLine);
-            });
-
+              
             that.set('lineItems', salesOrderLineItems);
           }
         }
