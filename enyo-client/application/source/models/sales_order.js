@@ -59,8 +59,25 @@ white:true*/
             var quoteLineItems = quote.get('lineItems'),
               salesOrderLineItems = new XM.SalesOrderLineCollection(),
               salesOrderLine = new XM.SalesOrderLine(),
-              quoteLine = new XM.QuoteLine(),
-              
+              quoteLineAttrs = XM.QuoteLine.getAttributeNames(),
+              soLineAttrs = XM.SalesOrderLine.getAttributeNames(),
+              matchingArray2 = [];
+
+            for (var x = 0; x < soLineAttrs.length; x++) {
+              if (quoteLineAttrs.indexOf(soLineAttrs[x]) !== -1)
+                matchingArray2.push(soLineAttrs[x]);
+              else
+                console.log(soLineAttrs[x]);  //delete this mike
+            }
+
+            _.each(quoteLineItems.models, function (quoteLine) {
+              for (var x = 0; x < matchingArray2.length; x++) {
+                salesOrderLine.set(matchingArray2[x], quoteLine.get(matchingArray2[x]));
+              }
+              salesOrderLine.set('salesOrder', that);
+              salesOrderLineItems.add(salesOrderLine);
+            });
+
             that.set('lineItems', salesOrderLineItems);
           }
         }
