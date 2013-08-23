@@ -52,9 +52,28 @@ white:true*/
           }
         }
         for (var i = 0; i < matchingArray.length; i++) {
-          if (matchingArray[i] !== 'lineItems')
+          if (matchingArray[i] !== 'lineItems' && matchingArray[i] !== 'customer')
             that.set(matchingArray[i], quote.get(matchingArray[i]));
-          else {
+          else if (matchingArray[i] === 'customer') {
+            //check to see if the customer quote is actually a prospect
+            if (quote.get('customer').editableModel === "XM.Prospect") {
+              var oldProspect = quote.get('customer'),
+                prospectId = oldProspect.get('id'),
+                newCustomer = new XM.Customer();
+
+              newCustomer.convertFromProspect(prospectId);
+              
+              /*
+              * this probably needs to be in some sort of
+              *   callback, waiting for the convertFromProspect
+              *   function to finish
+              */
+              that.set(matchingArray[i], newCustomer);
+            }
+            else
+              that.set(matchingArray[i], quote.get(matchingArray[i]));
+          }
+          else if (matchingArray[i] === 'lineItems') {
             //need to convert quote lines to sales order lines
             var quoteLineItems = quote.get('lineItems'),
               salesOrderLineItems = new XM.SalesOrderLineCollection(),
